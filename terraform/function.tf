@@ -19,7 +19,7 @@ resource "google_cloudfunctions_function" "function" {
     source_archive_bucket = google_storage_bucket.function_bucket.name
     source_archive_object = google_storage_bucket_object.zip.name
 
-    entry_point = "hello_gcs"
+    entry_point = "hello_world"
 
     event_trigger {
         event_type = "google.storage.object.finalize"

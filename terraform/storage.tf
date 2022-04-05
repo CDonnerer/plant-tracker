@@ -4,6 +4,6 @@ resource "google_storage_bucket" "function_bucket" {
 }
 
 resource "google_storage_bucket" "input_bucket" {
-    name     = "${var.project-id}-input"
+    name     = "${var.project_id}-input"
     location = var.region
 }

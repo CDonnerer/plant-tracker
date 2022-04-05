@@ -1,6 +1,6 @@
 variable "project_id" {
     type    = string
-    default = "my-fun-project"
+    default = "plant-tracker-sandbox"
 }
 
 variable "region" {
