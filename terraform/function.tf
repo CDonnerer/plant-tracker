@@ -26,4 +26,3 @@ resource "google_cloudfunctions_function" "function" {
         resource = "${var.project_id}-input"
     }
 }
-
