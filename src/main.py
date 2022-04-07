@@ -1,18 +1,23 @@
 """My fun cloud function
 """
+from googleapiclient.discovery import build
 
 # TODO: logging.
 
+SHEET_ID = "1LuHSWJIRXN3KEoimvAa_LlmKE1yGIiH_ClbBKsIN-7A"
+SAMPLE_RANGE_NAME = 'R1C1:R2C2'
+
 
 def hello_world(event, context):
-    print(f"Hello world {context.event_id}")
-    print(f"Here's yer bucket... {event}")
+    print("Starting up the cloud function")
 
-    # print('Event ID:' , context.event_id)
-    # print('Event type:', context.event_type)
-    # print('Bucket:', event['bucket'])
-    # print('File:',  event['name'])
-    # print('Metageneration:',  event['metageneration'])
-    # print('Created:',  event['timeCreated'])
-    # print('Updated:',  event['updated'])
+    service = build('sheets', 'v4')
+    sheet = service.spreadsheets()
+
+    result = sheet.values().get(
+        spreadsheetId=SHEET_ID,
+        range=SAMPLE_RANGE_NAME
+    ).execute() 
+
+    print(result)
 

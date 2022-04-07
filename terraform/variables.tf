@@ -6,3 +6,8 @@ variable "project_id" {
 variable "region" {
     default = "europe-west2"
 }
+
+variable "service_account" {
+    type    = string
+    default = "gsheets-connect@plant-tracker-sandbox.iam.gserviceaccount.com"
+}
