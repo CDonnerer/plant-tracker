@@ -13,6 +13,8 @@ resource "google_storage_bucket_object" "zip" {
 }
 
 resource "google_cloudfunctions_function" "function" {
+    service_account_email = var.service_account
+
     name = "function-trigger-on-gcs"
     runtime = "python38"
 
@@ -25,4 +27,5 @@ resource "google_cloudfunctions_function" "function" {
         event_type = "google.storage.object.finalize"
         resource = "${var.project_id}-input"
     }
+
 }
