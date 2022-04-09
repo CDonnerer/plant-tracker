@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 # TODO: logging.
 
 SHEET_ID = "1LuHSWJIRXN3KEoimvAa_LlmKE1yGIiH_ClbBKsIN-7A"
-SAMPLE_RANGE_NAME = 'R1C1:R2C2'
+SAMPLE_RANGE_NAME = "Form Responses 1"
 
 
 def hello_world(event, context):
@@ -17,7 +17,7 @@ def hello_world(event, context):
     print("Retrieving data from gsheets...")
     df = get_gsheets_data()
 
-    print("Writing data from BQ...")
+    print("Writing data to BQ...")
     pdf_to_bq(df)
 
 
@@ -38,9 +38,9 @@ def get_gsheets_data():
     return df
 
 def clean_df(df):
-    df.to_csv("plants.csv", index=False)
+    df.to_csv("/tmp/plants.csv", index=False)
     df = pd.read_csv(
-        "plants.csv", 
+        "/tmp/plants.csv", 
         parse_dates=["Timestamp"], 
         infer_datetime_format=True
     )
