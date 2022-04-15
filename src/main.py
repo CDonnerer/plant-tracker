@@ -76,15 +76,18 @@ def pdf_to_bq(df, table_id="plant-tracker-sandbox.plant_tracker.watering_history
         )
     )
 
+
 def create_watering_report(df):
     df["watering_date"] = df["timestamp"].dt.date
     df["days_since_watering"] = date.today() - df["watering_date"]
 
-    df["days_since_previous_watering"] = df.groupby("which_plant")["days_since_watering"].diff()
+    df["days_since_previous_watering"] = df.groupby("which_plant")[
+        "days_since_watering"
+    ].diff()
 
     res = df.groupby("which_plant").agg(
         last_watering=("days_since_watering", "min"),
-        mean_days_between_watering=("days_since_previous_watering", "mean")
+        mean_days_between_watering=("days_since_previous_watering", "mean"),
     )
     res["mean_days_between_watering"] = abs(res["mean_days_between_watering"].dt.days)
     return res
@@ -97,20 +100,18 @@ def send_watering_report(res):
 
     name = "projects/687238585869/secrets/SENDGRID_API_KEY/versions/latest"
     response = sc_client.access_secret_version(name=name)
-    sendgrid_api_key = response.payload.data.decode('UTF-8')
+    sendgrid_api_key = response.payload.data.decode("UTF-8")
 
     sg = sendgrid.SendGridAPIClient(api_key=sendgrid_api_key)
 
     from sendgrid.helpers.mail import Mail
 
     message = Mail(
-        from_email='christian.donnerer@gmail.com',
-        to_emails='christian.donnerer@gmail.com',
-        subject='Watering report',
-        html_content=res.to_html()
+        from_email="christian.donnerer@gmail.com",
+        to_emails="christian.donnerer@gmail.com",
+        subject="Watering report",
+        html_content=res.to_html(),
     )
 
     response = sg.send(message)
     print(response.status_code, response.body, response.headers)
-
-
