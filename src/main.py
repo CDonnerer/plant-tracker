@@ -14,7 +14,7 @@ SHEET_ID = "1LuHSWJIRXN3KEoimvAa_LlmKE1yGIiH_ClbBKsIN-7A"
 SAMPLE_RANGE_NAME = "Form Responses 1"
 
 
-def hello_world(event, context):
+def hello_world(request):
     print("Starting up the cloud function")
 
     print("Retrieving data from gsheets...")
@@ -28,6 +28,8 @@ def hello_world(event, context):
 
     print("Sending watering report...")
     send_watering_report(res)
+    
+    return "Hello!"
 
 
 def get_gsheets_data():

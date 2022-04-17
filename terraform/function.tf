@@ -23,8 +23,5 @@ resource "google_cloudfunctions_function" "function" {
 
     entry_point = "hello_world"
 
-    event_trigger {
-        event_type = "google.storage.object.finalize"
-        resource = "${var.project_id}-input"
-    }
+    trigger_http = true
 }
